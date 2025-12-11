@@ -24,7 +24,7 @@ title: "Econ 8310 – Semester Project"
 
 ---
 
-# And... how it ended
+# How it ended...
 
 ![Mind Blown](nn_happy_ending.png)
 
