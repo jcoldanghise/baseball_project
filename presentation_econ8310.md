@@ -106,11 +106,12 @@ Why'd we request additional data?  More videos, more data, higher performance.
 
 # Modeling Approach
 
-- Model from scratch
-- Pretrained neural network
+Homegrown model vs. Pretrained 
 
 **Why a neural network?**  
-- x, y, z
+- CNNs excel at small-object detection  
+- Handle variations in scale, lighting, and speed  
+- Pretrained backbones reduce data requirements  
 
 **Model inputs:**  
 - input features
