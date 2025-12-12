@@ -32,9 +32,9 @@ title: "Econ 8310 – Semester Project"
 
 # Key Findings
 
-- Did our model successfully identify moving baseballs?
+- Did our final model successfully identify moving baseballs?
 - Best performance came from:
-  - blah
+  - Pre-trained neural network 
   - blah 
   - blah 
 
@@ -51,9 +51,11 @@ title: "Econ 8310 – Semester Project"
 
 ---
 
-# Our Challenges 
+# Project Challenges 
 
-- Discuss some of our challenges
+- Building the dataset
+- Data pipeline issues
+- Training obstacles 
 
 
 ---
@@ -81,33 +83,34 @@ NOT SURE IF NEEDED
 
 # Data Preparation Pipeline
 
-- x
-- y
-- z
+1. Extracted frames from videos  
+2. Resized frames for model efficiency  
+3. Normalized pixel intensities 
+4. Manually created train and validation sets  
+5. Applied transformations
 
 ---
 
 # Additional Data Request
 
-We requested videos that:
+We requested:
 
-- x
-- y
-- z
+- **Side-angle and high-angle views**  
+- **Videos with different lighting**  
+- **Higher FPS** footage
 
 **Reason:**  
-Why'd we request additional data?
+Why'd we request additional data?  More videos, more data, higher performance. 
 
 ---
 
 # Modeling Approach
 
-We used a xyz-based object detection model.
+- Model from scratch
+- Pretrained neural network
 
 **Why a neural network?**  
-- x
-- y
-- z
+- x, y, z
 
 **Model inputs:**  
 - input features
@@ -119,11 +122,11 @@ We used a xyz-based object detection model.
 
 # Training the Neural Network
 
-- Loss function:  
-- Optimizer:  
-- Learning rate:   
-- Batch size: 
-- Trained for ~X epochs 
+- Loss function: **Smooth L1 + BCE**  
+- Optimizer: **Adam**
+- Learning rate: **1e-3**
+- Batch size: **8**
+- Trained for **20 epochs**
 
 ---
 
@@ -143,9 +146,10 @@ We used a xyz-based object detection model.
 
 # Limitations
 
-- x
-- y
-- z
+- Small object + fast motion = natural difficulty  
+- Limited labeled data compared to typical object detection tasks  
+- Ball occasionally blends into background at high speed  
+- Indoor videos with artificial light reduced model confidence
 
 ---
 
@@ -153,9 +157,11 @@ We used a xyz-based object detection model.
 
 To improve detection further:
 
-- x
-- y
-- z
+- Collect **more high-FPS footage**
+- Add **multiple camera angles**  
+- Expand training set
+
+Future goal: realtime ball-tracking system for coaches.
 
 ---
 
