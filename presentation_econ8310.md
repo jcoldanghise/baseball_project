@@ -33,8 +33,7 @@ title: "Econ 8310 – Semester Project"
 # Key Findings
 
 - Did our final model successfully identify moving baseballs?
-- Best performance came from:
-  - Pre-trained neural network 
+- Pre-trained neural network performed better (obviously)
   - blah 
   - blah 
 
