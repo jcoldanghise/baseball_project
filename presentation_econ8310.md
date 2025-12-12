@@ -47,36 +47,49 @@ title: "Econ 8310 – Semester Project"
 
 - Provide some sample predictions
 
+---
+
+# Project Obstacles 
+
+Our challenges can be broken down into three categories:
+
+- Data engineering
+- Model training
+- Evaluation 
+
 
 ---
 
-# Project Challenges 
+# Data engineering
+Most difficult part of the project
 
-- Building the dataset
-- Data pipeline issues
-- Training obstacles 
+- Misalignment between videos and annotations (indexing errors)
+- Inconsistent annotations 
+- Dataset & batching issues (targets were in different shapes)
 
-
----
-
-# The Problem
-NOT SURE IF NEEDED
-
-- x
-- y
-- z
+**Insight:** The brunt of the work was turning the videos and annotations into something a model could actually use
 
 ---
 
-# Data Labeling (CVAT)
-NOT SURE IF NEEDED
+# Model & training 
+The model only works when the data pipeline works...
 
-- x
-- y
-- z
+- Incorrect inout types (expecting float tensors but images in uint8)
+- Class imbalance: "moving" was rare 
+- Training loop crashes: incorrect ndexing, stacking errors, mismatched shapes
+- Memory constraints: large frames + batch loading = crash
 
-**Challenges:**  
-- x, y, z
+**Insight:**  Get a better computer... just kidding
+
+---
+
+# Model evaluation
+
+- Checkpoint loading issues (unpickling errors)
+- Validation confusion: unsure where/how to build a validation data loader
+- Model paramaters: trying to figure out what information a model object gives
+
+**Insight:**  Evaluating, saving, and reloading a neural network model is its own engineering problem 
 
 ---
 
