@@ -1,7 +1,9 @@
 ---
 marp: true
+html: true
 title: "Econ 8310 – Semester Project"
 ---
+
 
 <style>
   /* Target images within slides */
@@ -10,6 +12,29 @@ title: "Econ 8310 – Semester Project"
     display: block; /* Helps with centering */
     margin: auto;
   }
+
+  img.emoji {
+    display: inline;
+    height: 1em;
+    width: 1em;
+    margin-bottom: 0.25em;
+  }
+
+  .columns {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  } 
+
+  .column {
+    flex: 1;
+  }
+
+  .column table {
+    width: 100%;
+    font-size: 0.85em;
+  }
+
 </style>
 
 # **Hey Batta Batta... _Train a Neural Network_**
@@ -30,22 +55,30 @@ title: "Econ 8310 – Semester Project"
 
 ---
 
-# Key Findings
+# Model Debrief
 
-- Did our final model successfully identify moving baseballs?
-- Pre-trained neural network performed better (obviously)
-  - blah 
-  - blah 
+- Did we generate a model? :white_check_mark:
+- Did it produce results? :white_check_mark:
+- Was it a good model? :sweat_smile:
 
-**Overall Result:** The model... blah blah blah
+
+**Overall:** Our model was far from perfect...
 
 ---
 
-# Visual Examples
+# Example 1
 
-**Sample predictions:**  
+<video width="640" height="480" controls>
+    <source src="joe_test.mov" type="video/mp4">
+</video>
 
-- Provide some sample predictions
+---
+
+# Example 2
+
+<video width="640" height="480" controls>
+    <source src="test2.mov" type="video/mp4">
+</video>
 
 ---
 
@@ -53,10 +86,9 @@ title: "Econ 8310 – Semester Project"
 
 Our challenges can be broken down into three categories:
 
-- Data engineering
-- Model training
-- Evaluation 
-
+1. Data engineering
+2. Model training
+3. Model evaluation 
 
 ---
 
@@ -67,7 +99,7 @@ Most difficult part of the project
 - Inconsistent annotations 
 - Dataset & batching issues (targets were in different shapes)
 
-**Insight:** The brunt of the work was turning the videos and annotations into something a model could actually use
+**Takeaway:** The brunt of the work was turning the videos and annotations into something a model could actually use
 
 ---
 
@@ -76,10 +108,10 @@ The model only works when the data pipeline works...
 
 - Incorrect inout types (expecting float tensors but images in uint8)
 - Class imbalance: "moving" was rare 
-- Training loop crashes: incorrect ndexing, stacking errors, mismatched shapes
+- Training loop crashes: incorrect indexing, stacking errors, mismatched shapes
 - Memory constraints: large frames + batch loading = crash
 
-**Insight:**  Get a better computer... just kidding
+**Takeaway:**  Get a better computer (just kidding).  _Ask for help sooner rather than later._
 
 ---
 
@@ -87,9 +119,10 @@ The model only works when the data pipeline works...
 
 - Checkpoint loading issues (unpickling errors)
 - Validation confusion: unsure where/how to build a validation data loader
-- Model paramaters: trying to figure out what information a model object gives
+- Model paramaters: understanding what information a model object gives
+- How to format new input data to test the model 
 
-**Insight:**  Evaluating, saving, and reloading a neural network model is its own engineering problem 
+**Takeaway:**  Evaluating, saving, and reloading a neural network model adds another layer of data engineering 
 
 ---
 
@@ -100,46 +133,79 @@ The model only works when the data pipeline works...
 3. Normalized pixel intensities 
 4. Manually created train and validation sets  
 5. Applied transformations
+6. Trained the model 
 
 ---
 
-# Additional Data Request
+# Our Proposed Approach 
 
-We requested:
+Our initial proposal was to explore tree-based models as baseline before neural networks
 
-- **Side-angle and high-angle views**  
-- **Videos with different lighting**  
-- **Higher FPS** footage
+**What actually happened:** 
 
-**Reason:**  
-Why'd we request additional data?  More videos, more data, higher performance. 
+- Tree-based model implementation was not intuitive
+- Opted to neural network models
+  - Neural network from scratch
+  - Pretrained neural network 
 
 ---
 
 # Modeling Approach
 
-Homegrown model vs. Pretrained 
+**From Scratch**  
+- conv layers + global avg pool + 1 linear layer
+- Look → clues → look again → clues → summarize → decide
+- Information must pass through each layer
+- **Answering one thing:** is the baseball moving in the frame? 
 
-**Why a neural network?**  
-- CNNs excel at small-object detection  
-- Handle variations in scale, lighting, and speed  
-- Pretrained backbones reduce data requirements  
-
-**Model inputs:**  
-- input features
-
-**Model outputs:**  
-- resulting output
+**Pretrained**  
+- Pretrained (ResNet18): 17 conv layers + 8 shortcuts 
+- Already knows many general visual features
+- **Answering two things:** where's the ball? is it moving? 
 
 ---
 
-# Training the Neural Network
+# From Stratch Neural Network
 
-- Loss function: **Smooth L1 + BCE**  
+<div class="columns">
+<div class="column">
+
+### Predictions
+| Predicted Class | Count |
+|-----------------|-------|
+| 0 (Not Moving)  | 140   |
+| 1 (Moving)      | 0     |
+| **Total**       | **140** |
+
+</div>
+
+<div class="column">
+
+### True Class Distribution
+| Class Label | Meaning    | Count |
+|------------|------------|-------|
+| 0          | Not Moving | 86    |
+| 1          | Moving     | 54    |
+| **Total**  | —          | **140** |
+
+</div>
+</div>
+
+---
+
+# Pretrained Neural Network
+
+- Loss function: **Smooth L1 + Binary Cross-Entropy (BCE)**  
+  - **Smooth L1:** bounding box
+  - **BCE:** moving baseball
 - Optimizer: **Adam**
+  - Fast convergence & minimal tuning
 - Learning rate: **1e-3**
+  - Common default for the optimizer used
 - Batch size: **8**
+  - Memory constraints & small dataset
 - Trained for **20 epochs**
+  - Saw every training sample 20 times 
 
 ---
 
@@ -151,39 +217,21 @@ Homegrown model vs. Pretrained
 - Precision: **0%**  
 - Recall: **0%**
 
-**Insights:**
-
-- x, y, z
-
 ---
 
-# Limitations
-
-- Small object + fast motion = natural difficulty  
-- Limited labeled data compared to typical object detection tasks  
-- Ball occasionally blends into background at high speed  
-- Indoor videos with artificial light reduced model confidence
-
----
-
-# Recommendations
-
-To improve detection further:
-
-- Collect **more high-FPS footage**
-- Add **multiple camera angles**  
-- Expand training set
-
-Future goal: realtime ball-tracking system for coaches.
-
----
-
-# Template Slide
+# Another slide
 
 - 
--  
-- 
--   
+-
+-
+
+---
+
+# Another slide
+
+-
+-
+-
 
 ---
 
