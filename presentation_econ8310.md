@@ -69,7 +69,7 @@ title: "Econ 8310 – Semester Project"
 # Example 1
 
 <video width="640" height="480" controls>
-    <source src="joe_test.mov" type="video/mp4">
+    <source src="test_final1.mov" type="video/mp4">
 </video>
 
 ---
@@ -77,8 +77,19 @@ title: "Econ 8310 – Semester Project"
 # Example 2
 
 <video width="640" height="480" controls>
-    <source src="test2.mov" type="video/mp4">
+    <source src="test_final2.mov" type="video/mp4">
 </video>
+
+---
+
+# Model Pipeline
+
+1. Extracted frames from videos  
+2. Resized frames for model efficiency  
+3. Normalized pixel intensities 
+4. Manually created train and validation sets  
+5. Applied transformations
+6. Trained the model 
 
 ---
 
@@ -103,10 +114,10 @@ Most difficult part of the project
 
 ---
 
-# Model & training 
+# Model training 
 The model only works when the data pipeline works...
 
-- Incorrect inout types (expecting float tensors but images in uint8)
+- Incorrect input types (expecting float tensors but images in uint8)
 - Class imbalance: "moving" was rare 
 - Training loop crashes: incorrect indexing, stacking errors, mismatched shapes
 - Memory constraints: large frames + batch loading = crash
@@ -126,17 +137,6 @@ The model only works when the data pipeline works...
 
 ---
 
-# Data Preparation Pipeline
-
-1. Extracted frames from videos  
-2. Resized frames for model efficiency  
-3. Normalized pixel intensities 
-4. Manually created train and validation sets  
-5. Applied transformations
-6. Trained the model 
-
----
-
 # Our Proposed Approach 
 
 Our initial proposal was to explore tree-based models as baseline before neural networks
@@ -150,7 +150,7 @@ Our initial proposal was to explore tree-based models as baseline before neural 
 
 ---
 
-# Modeling Approach
+# Modeling
 
 **From Scratch**  
 - conv layers + global avg pool + 1 linear layer
@@ -216,22 +216,6 @@ Our initial proposal was to explore tree-based models as baseline before neural 
 - Mean IoU: **0.00**  
 - Precision: **0%**  
 - Recall: **0%**
-
----
-
-# Another slide
-
-- 
--
--
-
----
-
-# Another slide
-
--
--
--
 
 ---
 
