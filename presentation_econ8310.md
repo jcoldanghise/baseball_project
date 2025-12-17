@@ -20,6 +20,11 @@ title: "Econ 8310 – Semester Project"
     margin-bottom: 0.25em;
   }
 
+  img.left-img {
+    float: left;
+    margin: 0 1rem 1rem 0;
+  }
+
   .columns {
     display: flex;
     gap: 24px;
@@ -51,7 +56,7 @@ title: "Econ 8310 – Semester Project"
 
 # How it ended...
 
-![Mind Blown](nn_happy_ending.png)
+![Big Brain](nn_happy_ending.png)
 
 ---
 
@@ -63,33 +68,6 @@ title: "Econ 8310 – Semester Project"
 
 
 **Overall:** Our model was far from perfect...
-
----
-
-# Example 1
-
-<video width="640" height="480" controls>
-    <source src="test_final1.mov" type="video/mp4">
-</video>
-
----
-
-# Example 2
-
-<video width="640" height="480" controls>
-    <source src="test_final2.mov" type="video/mp4">
-</video>
-
----
-
-# Model Pipeline
-
-1. Extracted frames from videos  
-2. Resized frames for model efficiency  
-3. Normalized pixel intensities 
-4. Manually created train and validation sets  
-5. Applied transformations
-6. Trained the model 
 
 ---
 
@@ -117,10 +95,10 @@ Most difficult part of the project
 # Model training 
 The model only works when the data pipeline works...
 
-- Incorrect input types (expecting float tensors but images in uint8)
-- Class imbalance: "moving" was rare 
-- Training loop crashes: incorrect indexing, stacking errors, mismatched shapes
-- Memory constraints: large frames + batch loading = crash
+- Incorrect input types (float tensors vs. uint8)
+- Class imbalance: "moving" data was sparse
+- Training loop crashes: incorrect indexing, mismatched shapes, etc.
+- Memory constraints: large frames + batch size = crash
 
 **Takeaway:**  Get a better computer (just kidding).  _Ask for help sooner rather than later._
 
@@ -147,6 +125,17 @@ Our initial proposal was to explore tree-based models as baseline before neural 
 - Opted to neural network models
   - Neural network from scratch
   - Pretrained neural network 
+
+---
+
+# Model Pipeline
+
+1. Extracted frames from videos  
+2. Resized frames for model efficiency  
+3. Normalized pixel intensities 
+4. Manually created train and validation sets  
+5. Applied transformations
+6. Trained the model 
 
 ---
 
@@ -204,18 +193,45 @@ Our initial proposal was to explore tree-based models as baseline before neural 
   - Common default for the optimizer used
 - Batch size: **8**
   - Memory constraints & small dataset
-- Trained for **20 epochs**
-  - Saw every training sample 20 times 
 
 ---
 
-# Results
+# Training Results
 
-**Performance Metrics:**
+<div class="columns">
+<div>
+<img src="training.png" class="left-img">
+</div>
+<div>
 
-- Mean IoU: **0.00**  
-- Precision: **0%**  
-- Recall: **0%**
+## Trained for **20 epochs**
+## Movement accuracy of **1%**
+
+### Why this probably happened...
+
+- Limited data leading to unstable training 
+- Extremely high final loss
+- Underlying issues with labeling or class-index mistmach
+
+
+</div>
+</div>
+
+---
+
+# Example 1
+
+<video width="640" height="480" controls>
+    <source src="test_final1.mov" type="video/mp4">
+</video>
+
+---
+
+# Example 2
+
+<video width="640" height="480" controls>
+    <source src="test_final2.mov" type="video/mp4">
+</video>
 
 ---
 
