@@ -143,21 +143,21 @@ Most difficult part of the project
 # Model training 
 The model only works when the data pipeline works...
 
-- Incorrect input types (float tensors vs. uint8)
-- Class imbalance: "moving" data was sparse
-- Training loop crashes: incorrect indexing, mismatched shapes, etc.
+- Incorrect input types 
+- Class imbalance
+- Training loop crashes: incorrect indexing, dimension issues, etc.
 - Memory constraints: large frames + batch size = crash
 
-**Takeaway:**  Get a better computer (just kidding).  _Ask for help sooner rather than later._
+**Takeaway:**  Get a better computer (just kidding).  _Ask for help!_
 
 ---
 
 # Model evaluation
 
 - Checkpoint loading issues (unpickling errors)
-- Validation confusion: unsure where/how to build a validation data loader
-- Model paramaters: understanding what information a model object gives
-- How to format new input data to test the model 
+- Validation confusion: unsure how to incorporate a validation data loader
+- Understanding what information a model object gives
+- Formating new input data to test the model 
 
 **Takeaway:**  Evaluating, saving, and reloading a neural network model adds another layer of data engineering 
 
@@ -226,7 +226,7 @@ Our initial proposal was to explore tree-based models as baseline before neural 
   - **BCE:** moving baseball
 - Optimizer: **Adam**
   - Fast convergence & minimal tuning
-- Learning rate: **1e-3**
+- Learning rate: **0.001**
   - Common default for the optimizer used
 - Batch size: **8**
   - Memory constraints & small dataset
