@@ -1,7 +1,7 @@
 ---
 marp: true
 html: true
-title: "Econ 8310 – Semester Project"
+title: "Automated Detection of Baseballs in Training Videos"
 ---
 
 
@@ -43,7 +43,7 @@ title: "Econ 8310 – Semester Project"
 </style>
 
 # **Hey Batta Batta... _Train a Neural Network_**
-### ECON 8310 Semester Project
+## Automated Detection of Baseballs in Training Videos
 ### Presented by _Aziz, Qi Qi, and Joe_
 
 ---
@@ -71,6 +71,53 @@ title: "Econ 8310 – Semester Project"
 
 ---
 
+# Data Preparation Pipeline
+
+<div class="columns">
+<div class="column">
+
+| Step | Stage                    |
+|:-:|----------------------------------|
+| 1 | Raw Video                        |
+| 2 | Frame Extraction                 |
+| 3 | CVAT XML Parsing                 |
+| 4 | Frame + Annotation Alignment     |
+| 5 | Standardization                  |
+| 6 | Train / Validation Dataset       |
+
+</div>
+
+<div class="column">
+
+### Why it matters..
+
+- Garbage in &rarr; Garbage out
+- Model failure ≠ architecture failure
+- Often data or label issue
+
+</div>
+</div>
+
+---
+
+# Annotation Review
+
+<div class="columns">
+<div class="column">
+
+![Error1](annotation_error1.png)
+
+</div>
+
+<div class="column">
+
+![Error2](annotation_error2.png)
+
+</div>
+</div>
+
+---
+
 # Project Obstacles 
 
 Our challenges can be broken down into three categories:
@@ -89,6 +136,7 @@ Most difficult part of the project
 - Dataset & batching issues (targets were in different shapes)
 
 **Takeaway:** The brunt of the work was turning the videos and annotations into something a model could actually use
+
 
 ---
 
@@ -120,22 +168,11 @@ The model only works when the data pipeline works...
 Our initial proposal was to explore tree-based models as baseline before neural networks
 
 **What actually happened:** 
-
+- Before any modeling we had to stabilize data pipeline
 - Tree-based model implementation was not intuitive
 - Opted to neural network models
   - Neural network from scratch
   - Pretrained neural network 
-
----
-
-# Model Pipeline
-
-1. Extracted frames from videos  
-2. Resized frames for model efficiency  
-3. Normalized pixel intensities 
-4. Manually created train and validation sets  
-5. Applied transformations
-6. Trained the model 
 
 ---
 
@@ -209,28 +246,19 @@ Our initial proposal was to explore tree-based models as baseline before neural 
 
 ### Why this probably happened...
 
-- Limited data leading to unstable training 
+- Limited data &rarr; unstable training 
 - Extremely high final loss
-- Underlying issues with labeling or class-index mistmach
-
+- Issues with labeling or class-index mistmach
 
 </div>
 </div>
 
 ---
 
-# Example 1
+# Example
 
 <video width="640" height="480" controls>
     <source src="test_final1.mov" type="video/mp4">
-</video>
-
----
-
-# Example 2
-
-<video width="640" height="480" controls>
-    <source src="test_final2.mov" type="video/mp4">
 </video>
 
 ---
